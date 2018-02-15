@@ -14,7 +14,7 @@ public class Responder
 {
     Random aleatorio;
     ArrayList<String> respuestas;
-    HashMap<String, String> respuestasInput;
+    HashMap<HashSet<String>, String> respuestasInput;
     /**
      * Construct a Responder - nothing to do
      */
@@ -28,10 +28,18 @@ public class Responder
         respuestas.add("Wait a minute!");
         respuestas.add("Can you give me more information?");
         respuestas.add("Let's do it!");
-        respuestasInput.put("Windows", "We work with Windows, not with Linux.");
-        respuestasInput.put("Linux", "We don't use this software, sorry.");
-        respuestasInput.put("IOS", "We don't use this software, sorry.");
-        respuestasInput.put("Sell", "We can see the sellers.");
+        HashSet<String> set01 = new HashSet<>();
+        set01.add("windows");
+        HashSet<String> set02 = new HashSet<>();
+        set02.add("linux");
+        HashSet<String> set03 = new HashSet<>();
+        set03.add("IOS");
+        HashSet<String> set04 = new HashSet<>();
+        set04.add("sell");
+        respuestasInput.put(set01, "We work with Windows, not with Linux.");
+        respuestasInput.put(set02, "We don't use this software, sorry.");
+        respuestasInput.put(set03, "We don't use this software, sorry.");
+        respuestasInput.put(set04, "We can see the sellers.");
     }
 
     /**
@@ -41,20 +49,7 @@ public class Responder
     public String generateResponse(HashSet<String> input1)
     {
         String respuesta = null;
-        Iterator<String> iterator = input1.iterator();
-        boolean searching = true;
-        while(iterator.hasNext() && searching) {
-            respuesta = respuestasInput.get(iterator.next());
-            if(respuesta != null) {
-                searching = false;
-            }
-        }
-        
-        for(String element : input1) {
-            if(respuesta == null) {
-                respuesta = respuestasInput.get(element);
-            }
-        }
+        respuesta = respuestasInput.get(input1);
         
         if(respuesta == null) {
             respuesta = respuestas.get(aleatorio.nextInt(respuestas.size()));
