@@ -40,14 +40,25 @@ public class Responder
      */
     public String generateResponse(HashSet<String> input1)
     {
-        int numAleatorio = aleatorio.nextInt(respuestas.size());
-        Iterator<String> iterator = input1.iterator();
-        String userInputString = iterator.next();
         String respuesta = null;
-        respuesta = respuestasInput.get(userInputString);
+        Iterator<String> iterator = input1.iterator();
+        boolean searching = true;
+        while(iterator.hasNext() && searching) {
+            respuesta = respuestasInput.get(iterator.next());
+            if(respuesta != null) {
+                searching = false;
+            }
+        }
+        
+        for(String element : input1) {
+            if(respuesta == null) {
+                respuesta = respuestasInput.get(element);
+            }
+        }
+        
         if(respuesta == null) {
             respuesta = respuestas.get(aleatorio.nextInt(respuestas.size()));
         }
-        return respuestas.get(numAleatorio);
+        return respuesta;
     }
 }
