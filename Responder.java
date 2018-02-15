@@ -21,13 +21,8 @@ public class Responder
     public Responder()
     {
         aleatorio = new Random();
-        respuestas = new ArrayList<>();
+        createDefaultRespuesta();
         respuestasInput = new HashMap<>();
-        respuestas.add("Are you sure?");
-        respuestas.add("We are working on your problem.");
-        respuestas.add("Wait a minute!");
-        respuestas.add("Can you give me more information?");
-        respuestas.add("Let's do it!");
         HashSet<String> set01 = new HashSet<>();
         set01.add("windows");
         HashSet<String> set02 = new HashSet<>();
@@ -50,10 +45,25 @@ public class Responder
     {
         String respuesta = null;
         respuesta = respuestasInput.get(input1);
-        
+
         if(respuesta == null) {
-            respuesta = respuestas.get(aleatorio.nextInt(respuestas.size()));
+            if(respuestas.size() > 0) {
+                respuesta = respuestas.remove(aleatorio.nextInt(respuestas.size()));
+            }
+            else {
+                respuesta = "Sorry, I don't understand your question.";
+            }
         }
         return respuesta;
+    }
+
+    private void createDefaultRespuesta() 
+    {
+        respuestas = new ArrayList<>();
+        respuestas.add("Are you sure?");
+        respuestas.add("We are working on your problem.");
+        respuestas.add("Wait a minute!");
+        respuestas.add("Can you give me more information?");
+        respuestas.add("Let's do it!");
     }
 }
